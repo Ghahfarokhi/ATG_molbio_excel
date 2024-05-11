@@ -55,14 +55,17 @@ Alternatively, "**ListMotifs**" worksheet is specifically designed to provide a 
 
 ![AlignmentDecoration](./Screenshots/AlignmentDecoration.png)
 
-* **CasOFFinder Decoration**: CasOFFinder is a computational tool used to find genome-wide off-target candidates. The designated worksheet runs a Macro to visualize the crRNA and DNA (off-target) differences.
+* **CasOFFinder Decoration**: ![CasOFFinder](http://www.rgenome.net/cas-offinder/) is a computational tool used to find genome-wide off-target candidates for RNA-guided proteins. The designated worksheet runs a Macro to visualize the crRNA and DNA (off-target) differences.
 
 ![CasOFFinderDecoration](./Screenshots/CasOFFinderDecoration.png)
 
 ## Important to know
 * Non-DNA letters for the "Relaxed" basic functions are accepted (an on-purpose feature).
 * Microsoft Excel has a character limit of 32,767 characters in each cell.
-* The deault parameters for Needleman function are adjustable in "Info" worksheet.
+* The default parameters for Needleman function are adjustable via the "Info" worksheet.
+* Font colors for Matches and different type of Mismatches are adjustable by changing the font color of designated cells in the "Info" worksheet.
+
+![AlignmentFontColors](./Screenshots/AlignmentFontColors.png)
 
 ## Contact
 Please report bugs to Amir.Taheri.Ghahfarokhi@Gmail.com
