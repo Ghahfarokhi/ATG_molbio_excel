@@ -1,11 +1,8 @@
-Attribute VB_Name = "MotifSearch"
-
+Attribute VB_Name = "Module_Motifs"
 Option Explicit
 
-Function Motifs(Sequence As String, Motif As String, Mode As String) As String
+Public Function Motifs(Sequence As String, Motif As String, Mode As String) As String
  
-
-    'Date:20240415
     'Author:Amir.Taheri.Ghahfarokhi@Gmail.com
     'Github: https://github.com/Ghahfarokhi/ATG_molbio_excel
     
@@ -76,8 +73,6 @@ End Function
 
 Private Function IsMotifPresent(DNASequence As String, Motif As String, IUPACBases As String) As Boolean
 
-
-    'Date:20240415
     'Author:Amir.Taheri.Ghahfarokhi@Gmail.com
     'Github: https://github.com/Ghahfarokhi/ATG_molbio_excel
     

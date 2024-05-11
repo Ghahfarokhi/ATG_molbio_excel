@@ -1,10 +1,8 @@
-Attribute VB_Name = "Needleman"
+Attribute VB_Name = "Module_Needleman"
 Option Explicit
 
-Function NeedleAlignmnet(Text1 As String, Text2 As String) As String
+Public Function NeedleAlignmnet(Text1 As String, Text2 As String) As String
 
-
-    'Date:20240415
     'Author:Amir.Taheri.Ghahfarokhi@Gmail.com
     'Github: https://github.com/Ghahfarokhi/ATG_molbio_excel
     
@@ -20,10 +18,12 @@ Function NeedleAlignmnet(Text1 As String, Text2 As String) As String
     Seq2 = UCase(Text2)
     
     'Defining constants:
-    Const GAP = -5
-    Const MisMatch = -1
-    Const Match = 10
-    Const ExtGAP = -1
+    Dim GAP As Integer, ExtGAP As Integer, Mismatch As Integer, Match As Integer
+    GAP = Sheets("info").Range("Needle_Gap_Open").Value
+    ExtGAP = Sheets("info").Range("Needle_Gap_Extend").Value
+    Mismatch = Sheets("info").Range("Needle_Mismatch").Value
+    Match = Sheets("info").Range("Needle_Match").Value
+    
 
     'Defining the dimension of arrays:
     ReDim NeedleTable(Len(Seq2), Len(Seq1)) As Integer
@@ -57,7 +57,7 @@ Function NeedleAlignmnet(Text1 As String, Text2 As String) As String
             If Mid(Seq2, i, 1) = Mid(Seq1, j, 1) Then
                 Diag = NeedleTable(i - 1, j - 1) + Match
             Else
-                Diag = NeedleTable(i - 1, j - 1) + MisMatch
+                Diag = NeedleTable(i - 1, j - 1) + Mismatch
             End If
     
             
@@ -98,98 +98,71 @@ Function NeedleAlignmnet(Text1 As String, Text2 As String) As String
         Else
             If TraceBack(i - 1, j - 1) = "Beside" Then
                 SeqAlign1 = Mid(Seq1, y, 1) + SeqAlign1
-                SeqAlign2 = "_" + SeqAlign2
+                SeqAlign2 = "-" + SeqAlign2
                 j = j - 1
             Else
-                'MsgBox TraceBack(i - 1, j - 1)
-                SeqAlign1 = "_" + SeqAlign1
+                SeqAlign1 = "-" + SeqAlign1
                 SeqAlign2 = Mid(Seq2, x, 1) + SeqAlign2
                 i = i - 1
             End If
         End If
     Loop
 
-
-    MatchScore = 0
     Dim Pairing As String
     For i = 1 To Len(SeqAlign1)
         
         If Not Mid(SeqAlign1, i, 1) = Mid(SeqAlign2, i, 1) Then
-            MatchScore = MatchScore - 1
-            Range("A4").Characters(i, 1).Font.ColorIndex = 3
-            Range("A5").Characters(i, 1).Font.ColorIndex = 3
+
             Pairing = Pairing & " "
+            
         Else
-            MatchScore = MatchScore + 2
+        
             Pairing = Pairing & "|"
+            
         End If
+        
     Next i
     
-    Dim textOut As String
-    
-    If MatchScore < 10 And MatchScore >= 1 Then
-    
-        textOut = UCase(SeqAlign1) & vbNewLine & Pairing & vbNewLine & UCase(SeqAlign2)
-        
-    ElseIf MatchScore < 1 Then
-    
-        MatchScore = 0
-        textOut = UCase(SeqAlign1) & vbNewLine _
-        & Pairing & vbNewLine & "Detected: " & vbTab & UCase(SeqAlign2) _
-        & vbNewLine & "MatchScore: 00" & MatchScore
-        
-    Else
-    
-        textOut = "Expected: " & vbTab & UCase(SeqAlign1) & vbNewLine _
-        & Pairing & vbNewLine & "Detected: " & vbTab & UCase(SeqAlign2) _
-        & vbNewLine & "MatchScore: " & MatchScore
-        
-    End If
-    
-    
     NeedleAlignmnet = UCase(SeqAlign1) & vbNewLine & Pairing & vbNewLine & UCase(SeqAlign2)
-
 
 End Function
 
 
 
 Private Function Max1(a As Integer, b As Integer, c As Integer) As String
-If a = b And b = c And a = c Then
-    Max1 = "abc"
-    GoTo Equal
-End If
-
-If a = b And a > c Then
-    Max1 = "ab"
-    GoTo Equal
-End If
-
-If b = c And b > a Then
-    Max1 = "bc"
-    GoTo Equal
-End If
+    If a = b And b = c And a = c Then
+        Max1 = "abc"
+        Exit Function
+    End If
     
-If a = c And a > b Then
-    Max1 = "ac"
-    GoTo Equal
-End If
-
-If a > b Then
-    If a > c Then
-        Max1 = "a"
-    Else
-        Max1 = "c"
+    If a = b And a > c Then
+        Max1 = "ab"
+        Exit Function
     End If
-Else
-    If b > c Then
-        Max1 = "b"
-    Else
-        Max1 = "c"
+    
+    If b = c And b > a Then
+        Max1 = "bc"
+        Exit Function
     End If
-End If
-
-Equal:
+        
+    If a = c And a > b Then
+        Max1 = "ac"
+        Exit Function
+    End If
+    
+    If a > b Then
+        If a > c Then
+            Max1 = "a"
+        Else
+            Max1 = "c"
+        End If
+    Else
+        If b > c Then
+            Max1 = "b"
+        Else
+            Max1 = "c"
+        End If
+    End If
 
 End Function
 
