@@ -25,7 +25,19 @@ Simply download "ATG_molbio_excel.xlsb" file and enable the Macros upon opening.
 
 ```
 
-![Basics](./Screenshots/Basics.png)
+![Reverse_and_Complement](./Screenshots/Reverse_and_Complement.png)
+![GC_and_Translate](./Screenshots/GC_and_Translate.png)
+
+ * **PCR**: to produce the sequence of an amplicon using Fwd, Rev, and Template sequences as input:
+
+```
+=PCR(Fwd, Rev, Template)	
+=PCR(Fwd, Rev, Template, "Length")	
+
+```
+
+![PCR](./Screenshots/PCR.png)
+
 
 * **Needleman alignment**: Aligns two sequences using the [Needleman-Wunch alignment algorithm](https://en.wikipedia.org/wiki/Needleman%E2%80%93Wunsch_algorithm). 
 
